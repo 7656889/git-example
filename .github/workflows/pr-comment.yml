@@ -21,7 +21,7 @@ concurrency:
 jobs:
   comment:
     name: 发表评论
-    if: github.event.workflow_run.event == 'pull_request'
+    if: github.event.workflow_run.event == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
       - name: 解析 PR 信息
