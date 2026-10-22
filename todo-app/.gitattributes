@@ -1,0 +1,10 @@
+# 统一换行符，避免 Windows 同学和 macOS 同学互相看到"整个文件都被改了"
+* text=auto eol=lf
+
+# start.bat 必须是 CRLF 换行，否则 cmd 执行会出问题
+*.bat text eol=crlf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.db binary

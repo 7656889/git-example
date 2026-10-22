@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待办清单 · 全栈入门练习</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>待办清单</h1>
+      <p class="app__sub">Express + SQLite 全栈练习</p>
+    </header>
+
+    <!-- 用 form，回车和点按钮都能提交，还能触发浏览器的必填校验 -->
+    <form id="add-form" class="add">
+      <input
+        id="add-input"
+        type="text"
+        placeholder="今天要做什么？"
+        maxlength="200"
+        autocomplete="off"
+        required
+      >
+      <button type="submit">添加</button>
+    </form>
+
+    <nav class="filters" id="filters">
+      <button class="filter is-active" data-filter="all">全部</button>
+      <button class="filter" data-filter="active">未完成</button>
+      <button class="filter" data-filter="done">已完成</button>
+    </nav>
+
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="empty" hidden>这里空空如也，先添加一条吧 👆</p>
+
+    <footer class="app__footer">
+      <span id="count">共 0 条</span>
+      <button id="clear-done" class="link-btn" type="button">清除已完成</button>
+    </footer>
+  </main>
+
+  <!-- 轻提示：出错时显示 -->
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
