@@ -1,0 +1,26 @@
+# 依赖（本项目零依赖，预留）
+node_modules/
+vendor/
+
+# 构建产物
+dist/
+build/
+.cache/
+
+# 本地预览与临时文件
+.shots/
+.edgeprof/
+*.log
+*.tmp
+
+# 编辑器
+.vscode/*
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini

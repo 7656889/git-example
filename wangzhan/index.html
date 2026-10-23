@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Loss 下降中 · 人工智能专业 | 个人主页</title>
+<meta name="description" content="Loss 下降中 —— 人工智能专业在读。正在学习 Git 协作流程与 Agent 辅助开发，记录每一次 commit 与每一个踩过的坑。" />
+<meta name="author" content="Loss 下降中" />
+<meta name="theme-color" content="#05070d" />
+
+<!-- 尽早摘掉 no-js：只要脚本能跑，就启用动效；脚本挂了就退回全部可见 -->
+<script>document.documentElement.classList.remove("no-js");</script>
+
+<!-- Open Graph：分享到微信 / QQ / X 时的卡片 -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Loss 下降中 · 人工智能专业" />
+<meta property="og:description" content="还不准，但每一步都在变小。" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📉</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============ 背景层 ============ -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow glow-a" aria-hidden="true"></div>
+<div class="bg-glow glow-b" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+<div class="cursor-spot" aria-hidden="true"></div>
+
+<!-- 顶部滚动进度条 -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ============ 导航 ============ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__dot" aria-hidden="true"></span>
+    <span class="nav__brand-text mono">loss<span class="accent">↓</span>descent</span>
+  </a>
+
+  <nav class="nav__links" aria-label="主导航">
+    <a href="#about">关于</a>
+    <a href="#skills">技能</a>
+    <a href="#roadmap">路线</a>
+    <a href="#log">日志</a>
+    <a href="#contact" class="nav__cta">联系</a>
+  </nav>
+
+  <button class="nav__toggle" id="navToggle" aria-label="展开菜单" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero__inner">
+
+      <div class="hero__badge reveal">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="mono">status: training…</span>
+        <span class="hero__badge-sep" aria-hidden="true">/</span>
+        <span class="mono">epoch: 入门期</span>
+      </div>
+
+      <h1 class="hero__title reveal" data-delay="1">
+        <span class="hero__greet">你好，我是</span>
+        <span class="hero__name">
+          <span class="grad-text" id="typedName"></span><span class="caret" aria-hidden="true"></span>
+        </span>
+      </h1>
+
+      <p class="hero__subtitle reveal" data-delay="2">
+        人工智能专业在读 · 正在学习 <strong>Git 协作流程</strong> 与 <strong>Agent 辅助开发</strong>
+      </p>
+
+      <p class="hero__quote reveal" data-delay="3">
+        「我现在的状态就是名字本身 —— <em>还不准，但每一步都在变小</em>。」
+      </p>
+
+      <div class="hero__actions reveal" data-delay="4">
+        <a class="btn btn--primary" href="#about">
+          <span>了解我</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#log">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>学习日志</span>
+        </a>
+      </div>
+
+      <!-- 伪终端 -->
+      <div class="terminal reveal" data-delay="5" role="img" aria-label="终端演示：初始化并提交仓库">
+        <div class="terminal__bar">
+          <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+          <span class="terminal__title mono">git — bash</span>
+        </div>
+        <pre class="terminal__body mono" id="terminalBody"></pre>
+      </div>
+
+    </div>
+
+    <a class="hero__scroll" href="#about" aria-label="向下滚动">
+      <span class="mono">scroll</span>
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- ============ 数据条 ============ -->
+  <section class="stats" aria-label="关键数据">
+    <div class="stats__grid">
+      <div class="stat reveal">
+        <div class="stat__num"><span class="counter" data-target="3">0</span></div>
+        <div class="stat__label">已掌握的 Git 核心命令</div>
+      </div>
+      <div class="stat reveal" data-delay="1">
+        <div class="stat__num"><span class="counter" data-target="6">0</span></div>
+        <div class="stat__label">下一阶段要攻克的技能点</div>
+      </div>
+      <div class="stat reveal" data-delay="2">
+        <div class="stat__num"><span class="counter" data-target="100">0</span><span class="stat__suffix">%</span></div>
+        <div class="stat__label">提交前逐行读改动的比例</div>
+      </div>
+      <div class="stat reveal" data-delay="3">
+        <div class="stat__num"><span class="counter" data-target="0">0</span></div>
+        <div class="stat__label">因为提问而觉得丢人的次数</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 关于 ============ -->
+  <section class="section" id="about">
+    <div class="section__head">
+      <span class="section__index mono reveal">01</span>
+      <h2 class="section__title reveal" data-delay="1">关于我</h2>
+      <p class="section__desc reveal" data-delay="2">一个还没收敛的人，和一条正在下降的曲线</p>
+    </div>
+
+    <div class="about">
+      <div class="about__text reveal">
+        <p>
+          大家好，我是 <strong>Loss 下降中</strong>，人工智能专业在读，目前正在一条「从零开始」的路上补基础。
+        </p>
+        <p>
+          <strong>现在会什么</strong>：说实话还很浅 —— 熟悉 Git 最核心的三个动作：
+          <code>clone</code> 拉代码、<code>commit</code> 记录改动、<code>push</code> 推上远端。别的先不吹。
+        </p>
+        <p>
+          <strong>正在学什么</strong>：一边吃透「分支 → 合并 → 提交 PR」这条真实协作链路，
+          一边试着让 Agent 帮我完成小项目的搭建、改 bug、写文档。重点练两件事 ——
+          <strong>把需求说清楚</strong>，以及<strong>看懂它给的代码</strong>。
+        </p>
+        <p>
+          <strong>想找什么</strong>：一起练 Git 的搭子、能看两眼我 PR 的同学。
+          我基础薄，但提问不丢人，我会把踩过的坑记下来，也会认真 review 别人的代码。
+        </p>
+      </div>
+
+      <aside class="about__card reveal" data-delay="2">
+        <div class="card card--glass">
+          <div class="card__head">
+            <span class="mono">profile.json</span>
+            <span class="card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <pre class="mono card__code"><span class="c-p">{</span>
+  <span class="c-k">"name"</span>: <span class="c-s">"Loss 下降中"</span>,
+  <span class="c-k">"major"</span>: <span class="c-s">"人工智能"</span>,
+  <span class="c-k">"state"</span>: <span class="c-s">"training"</span>,
+  <span class="c-k">"lr"</span>: <span class="c-n">1e-3</span>,
+  <span class="c-k">"epoch"</span>: <span class="c-s">"入门期"</span>,
+  <span class="c-k">"gradient"</span>: <span class="c-s">"未爆炸"</span>,
+  <span class="c-k">"converged"</span>: <span class="c-b">false</span>
+<span class="c-p">}</span></pre>
+        </div>
+
+        <div class="card card--glass about__tags">
+          <span class="tag"># 人工智能</span>
+          <span class="tag"># Git 起步</span>
+          <span class="tag"># Agent 辅助开发</span>
+          <span class="tag"># 每行改动都要读</span>
+          <span class="tag"># 提问不丢人</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 技能 ============ -->
+  <section class="section" id="skills">
+    <div class="section__head">
+      <span class="section__index mono reveal">02</span>
+      <h2 class="section__title reveal" data-delay="1">技能现状</h2>
+      <p class="section__desc reveal" data-delay="2">诚实标注进度，比虚报水平更省事</p>
+    </div>
+
+    <div class="skills">
+      <div class="skill reveal" data-level="72">
+        <div class="skill__top">
+          <span class="skill__name">Git · 基础提交</span>
+          <span class="skill__val mono">72%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">clone / commit / push 已能独立跑通</p>
+      </div>
+
+      <div class="skill reveal" data-delay="1" data-level="30">
+        <div class="skill__top">
+          <span class="skill__name">Git · 分支与协作</span>
+          <span class="skill__val mono">30%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">分支 / 合并 / PR 正在啃，冲突还怕</p>
+      </div>
+
+      <div class="skill reveal" data-delay="2" data-level="45">
+        <div class="skill__top">
+          <span class="skill__name">Agent 辅助开发</span>
+          <span class="skill__val mono">45%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">能描述需求，代码需要逐行确认</p>
+      </div>
+
+      <div class="skill reveal" data-delay="3" data-level="60">
+        <div class="skill__top">
+          <span class="skill__name">AI 专业基础</span>
+          <span class="skill__val mono">60%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">课堂知识在学，工程落地待补</p>
+      </div>
+
+      <div class="skill reveal" data-delay="4" data-level="55">
+        <div class="skill__top">
+          <span class="skill__name">HTML / CSS / JS</span>
+          <span class="skill__val mono">55%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">能改能读，这个主页就是练手产物</p>
+      </div>
+
+      <div class="skill reveal" data-delay="5" data-level="20">
+        <div class="skill__top">
+          <span class="skill__name">工程化与部署</span>
+          <span class="skill__val mono">20%</span>
+        </div>
+        <div class="skill__bar"><i></i></div>
+        <p class="skill__note">GitHub Pages 刚摸到门</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 路线 ============ -->
+  <section class="section" id="roadmap">
+    <div class="section__head">
+      <span class="section__index mono reveal">03</span>
+      <h2 class="section__title reveal" data-delay="1">学习路线</h2>
+      <p class="section__desc reveal" data-delay="2">Git 基础 → 分支协作 → PR review → Agent 辅助工程</p>
+    </div>
+
+    <ol class="timeline">
+      <li class="timeline__item reveal is-done">
+        <span class="timeline__node" aria-hidden="true"></span>
+        <div class="timeline__body">
+          <span class="timeline__stage mono">stage 01 · 已完成</span>
+          <h3 class="timeline__title">Git 基础三连</h3>
+          <p>把 <code>clone</code> / <code>commit</code> / <code>push</code> 跑成肌肉记忆，学会写清楚每次提交说明。</p>
+        </div>
+      </li>
+
+      <li class="timeline__item reveal is-active">
+        <span class="timeline__node" aria-hidden="true"></span>
+        <div class="timeline__body">
+          <span class="timeline__stage mono">stage 02 · 进行中</span>
+          <h3 class="timeline__title">分支与合并</h3>
+          <p>新建分支、切换、合并，理解冲突为什么发生 —— 以及为什么它没那么可怕。</p>
+        </div>
+      </li>
+
+      <li class="timeline__item reveal">
+        <span class="timeline__node" aria-hidden="true"></span>
+        <div class="timeline__body">
+          <span class="timeline__stage mono">stage 03 · 待解锁</span>
+          <h3 class="timeline__title">Pull Request 与 Code Review</h3>
+          <p>提交第一个真实 PR，学会读别人的 diff，也接受别人读我的 diff。</p>
+        </div>
+      </li>
+
+      <li class="timeline__item reveal">
+        <span class="timeline__node" aria-hidden="true"></span>
+        <div class="timeline__body">
+          <span class="timeline__stage mono">stage 04 · 待解锁</span>
+          <h3 class="timeline__title">Agent 辅助工程</h3>
+          <p>用 Agent 做端到端小项目：搭建、排错、写文档、加测试，全程自己验收。</p>
+        </div>
+      </li>
+
+      <li class="timeline__item reveal">
+        <span class="timeline__node" aria-hidden="true"></span>
+        <div class="timeline__body">
+          <span class="timeline__stage mono">stage 05 · 目标</span>
+          <h3 class="timeline__title">把课程知识落成能跑的东西</h3>
+          <p>让「人工智能专业」这四个字，最终对应到几个真实可访问的项目上。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ 日志 ============ -->
+  <section class="section" id="log">
+    <div class="section__head">
+      <span class="section__index mono reveal">04</span>
+      <h2 class="section__title reveal" data-delay="1">学习日志</h2>
+      <p class="section__desc reveal" data-delay="2">踩过的坑，都会记下来</p>
+    </div>
+
+    <div class="logs">
+      <article class="log reveal">
+        <div class="log__meta mono">
+          <span class="log__tag log__tag--learn">learn</span>
+          <time>epoch 0 · 起步</time>
+        </div>
+        <h3 class="log__title">第一次 push 被拒绝</h3>
+        <p>愣了半分钟才明白：远端比我新，得先 <code>pull</code> 再推。原来 Git 不是不让我交，是让我先看看别人改了什么。</p>
+      </article>
+
+      <article class="log reveal" data-delay="1">
+        <div class="log__meta mono">
+          <span class="log__tag log__tag--fix">fix</span>
+          <time>epoch 1 · 排查</time>
+        </div>
+        <h3 class="log__title">commit 之后发现改错文件</h3>
+        <p>学会了 <code>git status</code> 和 <code>git diff</code> 要在提交<b>之前</b>看。现在的习惯是：改完先 diff，确认无误再 commit。</p>
+      </article>
+
+      <article class="log reveal" data-delay="2">
+        <div class="log__meta mono">
+          <span class="log__tag log__tag--agent">agent</span>
+          <time>epoch 2 · 协作</time>
+        </div>
+        <h3 class="log__title">Agent 写得很快，但不能不看</h3>
+        <p>它能在几分钟内搭出一个能跑的小项目，但真正的收获在于逐行读懂改动。看不懂的地方，我就去查、去问、去记。</p>
+      </article>
+
+      <article class="log reveal" data-delay="3">
+        <div class="log__meta mono">
+          <span class="log__tag log__tag--build">build</span>
+          <time>epoch 3 · 当前</time>
+        </div>
+        <h3 class="log__title">这个主页本身</h3>
+        <p>从设计到实现到部署，全程自己走一遍：写代码、验证、初始化仓库、提交、上传、开 Pages。它是我第一个真正意义上「上线」的东西。</p>
+      </article>
+    </div>
+
+    <div class="log-note reveal">
+      <span class="mono log-note__cmd">$ git log --oneline</span>
+      <p>每一次 commit 都是一次参数更新。有些步子很小，但方向是对的。</p>
+    </div>
+  </section>
+
+  <!-- ============ 联系 ============ -->
+  <section class="section section--contact" id="contact">
+    <div class="section__head">
+      <span class="section__index mono reveal">05</span>
+      <h2 class="section__title reveal" data-delay="1">保持联系</h2>
+      <p class="section__desc reveal" data-delay="2">求带、求搭子、求 review</p>
+    </div>
+
+    <div class="contact reveal">
+      <p class="contact__lead">
+        我基础薄，但愿意花时间。如果你想找个一起练 Git 的搭子，
+        或者愿意看两眼我的 PR，欢迎随时找我。
+      </p>
+
+      <div class="contact__grid">
+        <a class="contact__item" id="linkGithub" href="#" target="_blank" rel="noopener">
+          <span class="contact__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17.4 4.6 18.4 5 18.4 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+          </span>
+          <span class="contact__text">
+            <b>GitHub</b>
+            <i class="mono">查看我的仓库与提交</i>
+          </span>
+        </a>
+
+        <a class="contact__item" id="linkMail" href="#">
+          <span class="contact__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </span>
+          <span class="contact__text">
+            <b>邮箱</b>
+            <i class="mono">发邮件给我</i>
+          </span>
+        </a>
+
+        <div class="contact__item contact__item--static">
+          <span class="contact__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5 21 7v6c0 4.6-3.6 7.9-9 9.5C6.6 20.9 3 17.6 3 13V7z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+          </span>
+          <span class="contact__text">
+            <b>协作原则</b>
+            <i class="mono">AI 可以帮我写代码，但责任我自己扛</i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__left">
+      <span class="mono">© <span id="year">2026</span> Loss 下降中</span>
+      <span class="footer__sep" aria-hidden="true">·</span>
+      <span class="mono">loss ↓ descent</span>
+    </div>
+    <div class="footer__right">
+      <span class="footer__state">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="mono">training · not converged</span>
+      </span>
+      <a class="footer__top" href="#top" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
